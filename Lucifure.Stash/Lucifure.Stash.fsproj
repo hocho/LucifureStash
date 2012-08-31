@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{99eb1014-fb25-4fd2-8b84-67f5827ce61a}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ATSLinqCore</RootNamespace>
+    <AssemblyName>Lucifure.Stash</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <Name>Lucifure.Stash</Name>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <Tailcalls>false</Tailcalls>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Debug\Lucifure.Stash.XML</DocumentationFile>
+    <OtherFlags>
+    </OtherFlags>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release\Lucifure.Stash.XML</DocumentationFile>
+    <OtherFlags>--keyfile:..\Stash.snk --standalone</OtherFlags>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release40|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release40\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release40\Lucifure.Stash.XML</DocumentationFile>
+    <OtherFlags>--keyfile:..\Stash.snk</OtherFlags>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release40SA|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release40SA\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release40SA\Lucifure.Stash.XML</DocumentationFile>
+    <OtherFlags>--keyfile:..\Stash.snk --standalone</OtherFlags>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="FSharp.Core" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="StringExtensions.fs" />
+    <Compile Include="Misc.fs" />
+    <Compile Include="Functional.fs" />
+    <Compile Include="ErrorStrings.fs" />
+    <Compile Include="ExceptionWrapper.fs" />
+    <Compile Include="TypeSystem.fs" />
+    <Compile Include="RestRequestBuilder.fs" />
+    <Compile Include="MemberAccessor.fs" />
+    <Compile Include="NameValue.fs" />
+    <Compile Include="ObjectConverter.fs" />
+    <Compile Include="ObjectComposer.fs" />
+    <Compile Include="Converters.fs" />
+    <Compile Include="IMorph.fs" />
+    <Compile Include="IStash.fs" />
+    <Compile Include="MorphDataContract.fs" />
+    <Compile Include="StashEntityAttributes.fs" />
+    <Compile Include="ReflectionHelper.fs" />
+    <Compile Include="XmlRequestBuilder.fs" />
+    <Compile Include="MorphIntrinsic.fs" />
+    <Compile Include="IntrinsicMapperScalar.fs" />
+    <Compile Include="VectorHelper.fs" />
+    <Compile Include="IntrinsicMapperVector.fs" />
+    <Compile Include="DictionaryHelper.fs" />
+    <Compile Include="DictionaryMapper.fs" />
+    <Compile Include="StashAttributes.fs" />
+    <Compile Include="Mapper.fs" />
+    <Compile Include="XmlResponseParser.fs" />
+    <Compile Include="TypeReflector.fs" />
+    <Compile Include="Query.fs" />
+    <Compile Include="ExpressionParser.fs" />
+    <Compile Include="QueryProvider.fs" />
+    <Compile Include="Credentials.fs" />
+    <Compile Include="RetryPolicies.fs" />
+    <Compile Include="StashClientOptions.fs" />
+    <Compile Include="StashClient.fs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\FSharp\1.0\Microsoft.FSharp.Targets" Condition="!Exists('$(MSBuildBinPath)\Microsoft.Build.Tasks.v4.0.dll')" />
+  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets" Condition=" Exists('$(MSBuildBinPath)\Microsoft.Build.Tasks.v4.0.dll')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	     Other similar extension points exist, see Microsoft.Common.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

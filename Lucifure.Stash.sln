@@ -1,0 +1,71 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EC385A5D-881C-4FB7-BE84-05DD76B6588B}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		Lucifure.Stash.vsmdi = Lucifure.Stash.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lucifure.Stash.Tutorial", "Lucifure.Stash.Tutorial\Lucifure.Stash.Tutorial.csproj", "{61814D3C-BC20-4625-89BA-D556419D9C25}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Lucifure.Stash", "Lucifure.Stash\Lucifure.Stash.fsproj", "{99EB1014-FB25-4FD2-8B84-67F5827CE61A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lucifure.Stash.Test", "Lucifure.Stash.Test\Lucifure.Stash.Test.csproj", "{E4377419-12E4-46E0-BC48-099BDCEB17CD}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs16
+		SccProjectUniqueName0 = Lucifure.Stash\\Lucifure.Stash.fsproj
+		SccProjectName0 = Lucifure.Stash
+		SccLocalPath0 = Lucifure.Stash
+		SccProjectUniqueName1 = Lucifure.Stash.Test\\Lucifure.Stash.Test.csproj
+		SccProjectName1 = Lucifure.Stash.Test
+		SccLocalPath1 = Lucifure.Stash.Test
+		SccProjectUniqueName2 = Lucifure.Stash.Tutorial\\Lucifure.Stash.Tutorial.csproj
+		SccProjectName2 = Lucifure.Stash.Tutorial
+		SccLocalPath2 = Lucifure.Stash.Tutorial
+		SccLocalPath3 = .
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Lucifure.Stash.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Release40|Any CPU = Release40|Any CPU
+		Release40SA|Any CPU = Release40SA|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61814D3C-BC20-4625-89BA-D556419D9C25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61814D3C-BC20-4625-89BA-D556419D9C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61814D3C-BC20-4625-89BA-D556419D9C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61814D3C-BC20-4625-89BA-D556419D9C25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61814D3C-BC20-4625-89BA-D556419D9C25}.Release40|Any CPU.ActiveCfg = Release|Any CPU
+		{61814D3C-BC20-4625-89BA-D556419D9C25}.Release40|Any CPU.Build.0 = Release|Any CPU
+		{61814D3C-BC20-4625-89BA-D556419D9C25}.Release40SA|Any CPU.ActiveCfg = Release|Any CPU
+		{61814D3C-BC20-4625-89BA-D556419D9C25}.Release40SA|Any CPU.Build.0 = Release|Any CPU
+		{99EB1014-FB25-4FD2-8B84-67F5827CE61A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99EB1014-FB25-4FD2-8B84-67F5827CE61A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99EB1014-FB25-4FD2-8B84-67F5827CE61A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99EB1014-FB25-4FD2-8B84-67F5827CE61A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99EB1014-FB25-4FD2-8B84-67F5827CE61A}.Release40|Any CPU.ActiveCfg = Release40|Any CPU
+		{99EB1014-FB25-4FD2-8B84-67F5827CE61A}.Release40|Any CPU.Build.0 = Release40|Any CPU
+		{99EB1014-FB25-4FD2-8B84-67F5827CE61A}.Release40SA|Any CPU.ActiveCfg = Release40SA|Any CPU
+		{99EB1014-FB25-4FD2-8B84-67F5827CE61A}.Release40SA|Any CPU.Build.0 = Release40SA|Any CPU
+		{E4377419-12E4-46E0-BC48-099BDCEB17CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4377419-12E4-46E0-BC48-099BDCEB17CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4377419-12E4-46E0-BC48-099BDCEB17CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4377419-12E4-46E0-BC48-099BDCEB17CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4377419-12E4-46E0-BC48-099BDCEB17CD}.Release40|Any CPU.ActiveCfg = Release|Any CPU
+		{E4377419-12E4-46E0-BC48-099BDCEB17CD}.Release40|Any CPU.Build.0 = Release|Any CPU
+		{E4377419-12E4-46E0-BC48-099BDCEB17CD}.Release40SA|Any CPU.ActiveCfg = Release|Any CPU
+		{E4377419-12E4-46E0-BC48-099BDCEB17CD}.Release40SA|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
