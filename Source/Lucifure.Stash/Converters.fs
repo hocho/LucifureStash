@@ -71,8 +71,8 @@ module internal Converters =
     let converterDouble = 
         new Converter<Double>
                         ("Double"
-                        ,(fun (s : string) -> upcast Double.Parse s)
-                        ,(fun (o : obj) -> o.ToString()))
+                        ,(fun (s : string) -> upcast ObjectConverter.stringToDouble s)
+                        ,(fun (o : obj) -> ObjectConverter.doubleToString (o :?> double)))
 
     let converterGuid = 
         new Converter<Guid>

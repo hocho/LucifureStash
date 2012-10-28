@@ -438,7 +438,7 @@ type internal ExpressionParser<'a>
         |   x when x = typeof<bool>     ->  BoolToString (o :?> bool)
         |   x when x = typeof<int>      ->  (o :?> int).ToString()
         |   x when x = typeof<int64>    ->  (o :?> int64).ToString()
-        |   x when x = typeof<double>   ->  (o :?> double).ToString()
+        |   x when x = typeof<double>   ->  ObjectConverter.doubleToString (o :?> double)
         |   x when x = typeof<DateTime> ->  sprintf "datetime'%s'"
                                                 (ObjectConverter.dateTimeToString (o :?> DateTime))
         |   x when x = typeof<Guid>     ->  sprintf "guid'%s'"
@@ -457,7 +457,7 @@ type internal ExpressionParser<'a>
         |   x when x = typeof<bool>     ->  BoolToString (o :?> bool)
         |   x when x = typeof<int>      ->  (o :?> int).ToString()
         |   x when x = typeof<int64>    ->  (o :?> int64).ToString()
-        |   x when x = typeof<double>   ->  (o :?> double).ToString()
+        |   x when x = typeof<double>   ->  ObjectConverter.doubleToString (o :?> double)
         |   x when x = typeof<DateTime> ->  sprintf "datetime'%s'"
                                                 (ObjectConverter.dateTimeToString (o :?> DateTime))
         |   x when x = typeof<Guid>     ->  sprintf "guid'%s'"
