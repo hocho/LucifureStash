@@ -25,6 +25,11 @@ module internal ObjectConverter =
 
     let dateTimeToString value = XmlConvert.ToString(value, XmlDateTimeSerializationMode.RoundtripKind)        
 
+    let stringToDouble value = XmlConvert.ToDouble(value)
+
+    let doubleToString (value : float) = XmlConvert.ToString(value)        
+
+
     let isPrimitive = 
             function
             |   x when  x = typeof<String>
@@ -79,7 +84,7 @@ module internal ObjectConverter =
         |   x when x = "Edm.String"         ->  value                               :> obj
         |   x when x = "Edm.Int32"          ->  Int32.Parse value                   :> obj
         |   x when x = "Edm.Int64"          ->  Int64.Parse value                   :> obj    
-        |   x when x = "Edm.Double"         ->  Double.Parse value                  :> obj
+        |   x when x = "Edm.Double"         ->  stringToDouble value                :> obj
         |   x when x = "Edm.Guid"           ->  Guid.Parse value                    :> obj
         |   x when x = "Edm.DateTime"       ->  stringToDateTime value              :> obj
         |   x when x = "Edm.Boolean"        ->  Boolean.Parse value                 :> obj
@@ -93,7 +98,7 @@ module internal ObjectConverter =
         |   :?  String      as x    ->  ""              , x
         |   :?  Int32       as x    ->  "Edm.Int32"     , x.ToString()
         |   :?  Int64       as x    ->  "Edm.Int64"     , x.ToString()
-        |   :?  Double      as x    ->  "Edm.Double"    , x.ToString()
+        |   :?  Double      as x    ->  "Edm.Double"    , doubleToString x
         |   :?  Guid        as x    ->  "Edm.Guid"      , x.ToString()
         |   :?  DateTime    as x    ->  "Edm.DateTime"  , dateTimeToString x
         |   :?  Boolean     as x    ->  "Edm.Boolean"   , BoolToString x
