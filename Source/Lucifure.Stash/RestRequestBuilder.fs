@@ -111,7 +111,7 @@ type internal RestRequestBuilder
             (content                        :   string) 
             (request                        :   WebRequest) =
                 
-        request.ContentLength   <- int64 (content.Length)   
+        request.ContentLength   <- int64 (Encoding.UTF8.GetByteCount(content))   
         
         request.Headers.Add("Content-MD5", Hash content)
         request.Headers.Add("x-ms-version", "2011-08-18")
