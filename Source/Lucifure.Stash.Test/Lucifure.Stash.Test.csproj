@@ -63,6 +63,7 @@
     <Compile Include="AllDataWithDictionary.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="EdgeCases\WhiteSpace.cs" />
+    <Compile Include="Exception Test Run Time\IgnoreResourceNotFoundException.cs" />
     <Compile Include="Exception Test Run Time\MissingMembersInType.cs" />
     <Compile Include="ExceptionTests Compile Time\DoesNotImplementIMorph.cs" />
     <Compile Include="ExceptionTests Compile Time\DuplicateTablePropertyName.cs" />

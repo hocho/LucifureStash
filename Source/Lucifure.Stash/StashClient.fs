@@ -82,6 +82,10 @@ type StashClient<'a when 'a : equality> private
             let entitySetName = typeReflector.EntitySetName
             fun (o : obj) -> entitySetName
 
+    let expWrapForGet = if options.IgnoreResourceNotFoundException
+                            then Exp.wrapIgnoreResourceNotFoundException
+                            else Exp.wrap
+
     let entitySetNameRaw() = getEntitySetName newInstance
 
     let context = new RestRequestBuilder(
@@ -118,11 +122,6 @@ type StashClient<'a when 'a : equality> private
         |   null    ->  ""
         |   _       ->  (new StreamReader(response.GetResponseStream())).ReadToEnd()
 
-    let getStatusCode (response : WebResponse) = 
-        match response with
-        |   null    ->  enum -1
-        |   _       ->  (response :?> HttpWebResponse).StatusCode
-        
     // actual request to table service
     let makeRequest (request : HttpWebRequest) content = 
         
@@ -235,7 +234,7 @@ type StashClient<'a when 'a : equality> private
         with
         |   :? WebException as WebEx -> 
 
-                match getStatusCode WebEx.Response with 
+                match Exp.getStatusCode WebEx.Response with 
                 |   HttpStatusCode.NotFound     ->  false
                 |   _                           ->  reraise()   
 
@@ -323,7 +322,7 @@ type StashClient<'a when 'a : equality> private
         with
         |   :? WebException as WebEx -> 
 
-                match getStatusCode WebEx.Response with 
+                match Exp.getStatusCode WebEx.Response with 
                 |   HttpStatusCode.PreconditionFailed
                     ->  Msg.RaiseInner
                                 (Msg.errETagMatchFailed etag)
@@ -350,7 +349,7 @@ type StashClient<'a when 'a : equality> private
         with
         |   :? WebException as WebEx -> 
 
-                match getStatusCode WebEx.Response with 
+                match Exp.getStatusCode WebEx.Response with 
                 |   HttpStatusCode.PreconditionFailed
                     ->  Msg.RaiseInner
                                 (Msg.errETagMatchFailed etag)
@@ -556,7 +555,7 @@ type StashClient<'a when 'a : equality> private
         with
         |   :? WebException as WebEx -> 
 
-                match getStatusCode WebEx.Response with 
+                match Exp.getStatusCode WebEx.Response with 
                 |   HttpStatusCode.Conflict     
                     ->  Msg.RaiseInner
                                 (Msg.errTableAlreadyExists entitySetName)
@@ -576,7 +575,7 @@ type StashClient<'a when 'a : equality> private
         with
         |   :? WebException as WebEx -> 
 
-                match getStatusCode WebEx.Response with 
+                match Exp.getStatusCode WebEx.Response with 
                 |   HttpStatusCode.NotFound     
                     ->  Msg.RaiseInner
                                 (Msg.errTableNotFound entitySetName)    
@@ -847,7 +846,7 @@ type StashClient<'a when 'a : equality> private
         (partitionKey                       :   string) 
         (rowKey                             :   string) =
          
-        Exp.wrap (fun () -> get partitionKey rowKey)
+        expWrapForGet (fun () -> get partitionKey rowKey)
 
     // -----------------------------------------------------------------------------------------------------------------
 

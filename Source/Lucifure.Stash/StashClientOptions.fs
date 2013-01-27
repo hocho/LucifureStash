@@ -72,6 +72,8 @@ type StashClientOptions
 
     let mutable supportLargeObjectsInPool       =   false
 
+    let mutable ignoreResourceNotFoundException =   false
+
     /// <summary>
     /// Setup such that a callback on every StashClient invocation returns an object with feedback related information
     /// which could be useful for troubleshooting.
@@ -198,5 +200,17 @@ type StashClientOptions
 
         and set value = 
             supportLargeObjectsInPool <- value
+
+    /// <summary>
+    /// Set to true to turn of throwing a, '(404) Not Found', exception on the Get() method and instead return null, 
+    /// when the entity is not found in table storage. Default is false.
+    /// </summary>
+    member this.IgnoreResourceNotFoundException
+        with get() =        
+            ignoreResourceNotFoundException 
+
+        and set value = 
+            ignoreResourceNotFoundException  <- value
+
 
 // TODO Add Estimate Entity Size Delta
