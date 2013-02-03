@@ -37,15 +37,23 @@ type ShouldRetryResponse
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-type ShouldRetry    =   delegate of (int * Exception) -> ShouldRetryResponse
+type ShouldRetry    =   delegate of int * Exception -> ShouldRetryResponse
 
 type RetryPolicy    =   delegate of unit -> ShouldRetry
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-module internal Retryable = 
+module Retryable = 
 
-    let internal delayInRange = Misc.TimeSpanMinMax (TimeSpan.Zero) (TimeSpan.FromSeconds 30.0) // restrict sleep time
+    let DefaultMinBackoff                   = TimeSpan.FromSeconds 3.0
+    
+    let DefaultMaxBackoff                   = TimeSpan.FromSeconds 90.0
+
+    let DefaultDeltaBackoff                 = TimeSpan.FromSeconds 30.0
+    
+    let DefaultAttempts                     = 3
+
+    let internal delayInRange = Misc.TimeSpanMinMax DefaultMinBackoff DefaultMaxBackoff // restrict sleep time
 
     let internal isStatusCodeRetryable (statusCode : HttpStatusCode) = 
         match statusCode with
@@ -86,23 +94,14 @@ module internal Retryable =
 /// </summary>
 type RetryPolicies() = 
 
-    static let defaultAttempts                     = 3
-
-    static let defaultMinBackoff                   = TimeSpan.FromSeconds 3.0
-    
-    static let defaultMaxBackoff                   = TimeSpan.FromSeconds 90.0
-
-    static let defaultDeltaBackoff                 = TimeSpan.FromSeconds 2.0
-
-
     /// <summary>
     /// No retry is performed.
     /// </summary>
-    static member GetNoRetry : RetryPolicy = 
+    static member GetNoRetry()               : RetryPolicy = 
 
         RetryPolicy
                 (fun () -> ShouldRetry
-                                    (fun (i : int, ex : Exception) -> ShouldRetryResponse()))
+                                    (fun (i : int) (ex : Exception) -> ShouldRetryResponse()))
             
 
     /// <summary>
@@ -117,7 +116,7 @@ type RetryPolicies() =
 
         RetryPolicy
                 (fun () -> ShouldRetry
-                                (fun (attempt : int, ex : Exception) -> 
+                                (fun (attempt : int) (ex : Exception) -> 
                                     if attempt < maxAttempts 
                                         then    ShouldRetryResponse(interval)
                                         else    ShouldRetryResponse()))
@@ -134,11 +133,12 @@ type RetryPolicies() =
             ,deltaBackoff                   :   TimeSpan)
                                             :   RetryPolicy = 
         
+        let rnd = new Random()
+        
         RetryPolicy
                 (fun () -> ShouldRetry
-                                (fun (attempt : int, ex : Exception)    ->
+                                (fun (attempt : int) (ex : Exception)    ->
                                     if attempt < maxAttempts then
-                                        let rnd = new Random()
 
                                         let increment = (Math.Pow(2.0, (double) attempt) - 1.0) * 
                                                             (double) (rnd.Next(
@@ -164,12 +164,12 @@ type RetryPolicies() =
             ,deltaBackoff                   :   TimeSpan)
                                             :   RetryPolicy = 
 
-        RetryPolicies.GetExponential (maxAttempts, defaultMinBackoff, defaultMaxBackoff, deltaBackoff)
+        RetryPolicies.GetExponential (maxAttempts, Retryable.DefaultMinBackoff, Retryable.DefaultMaxBackoff, deltaBackoff)
 
 
-    static member internal
-        GetExponentialDefault() = 
+    static member 
+        internal GetExponentialDefault() = 
         
-            RetryPolicies.GetExponential (defaultAttempts, defaultDeltaBackoff)
+        RetryPolicies.GetExponential (Retryable.DefaultAttempts, Retryable.DefaultDeltaBackoff)
             
         

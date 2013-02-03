@@ -21,7 +21,7 @@ type internal QueryProvider
         ,entitySetName                      :   string
         ,ignoreMissingProperties            :   bool 
         ,supportLargeObjectsInPool          :   bool
-        ,requester                          :   HttpWebRequest -> string -> HttpWebResponse * string
+        ,requester                          :   (unit -> HttpWebRequest) -> string -> HttpWebResponse * string
         ,callback                           :   (obj -> unit) Option) =  
 
     inherit QueryProviderBase(callback)
@@ -44,7 +44,7 @@ type internal QueryProvider
                             then    tableName                       
                             else    tableName + "()?" + String.concat "&" cmds
                                             
-        let request = context.CreateRequest command CommandType.Get null Constant.ETagNoMatch Guid.Empty
+        let request() = context.CreateRequest command CommandType.Get null Constant.ETagNoMatch Guid.Empty
 
         requester request ""
 

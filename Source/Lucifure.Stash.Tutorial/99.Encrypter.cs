@@ -6,7 +6,7 @@ using System.IO;
 namespace CodeSuperior.Lucifure.Tutorial
 {
 	/// <summary>
-	/// Please note that encryptor is for demo purposes only and should not be considered as production quality.
+	/// Please note that Encrypter is for demo purposes only and should not be considered as production quality.
 	/// </summary>
 	public 
 	class Encrypter

@@ -13,6 +13,8 @@ namespace CodeSuperior.Lucifure.Tutorial
 	static  
 	class StashHelper
 	{
+		// -------------------------------------------------------------------------------------------------------------
+
 		public
 		static 
 		bool
@@ -31,6 +33,42 @@ namespace CodeSuperior.Lucifure.Tutorial
 				&& keysLhs.All(x => x.Value.ToString().Equals(rhs[x.Key].ToString())	// values are the same
 					&& x.Value.GetType() == rhs[x.Key].GetType());						// types are the same
 		}
+
+
+		// -------------------------------------------------------------------------------------------------------------
+
+		/// <summary>
+		/// Example code on how to add a retry policy.
+		/// Here, a wrapper is built around the default Exponential retry policy, such that calls to the retry 
+		/// policy can be intercepted and logged if necessary.
+		/// </summary>
+		public 
+		static 
+		void 
+		AddRetryInterceptor(
+			StashClientOptions					options)
+		{
+			// Get a function which creates the policy and invoke it to get the actual policy
+			var exponentatial = 
+					RetryPolicies.GetExponential(
+										Retryable.DefaultAttempts,
+										Retryable.DefaultDeltaBackoff)();
+			
+			// create an interceptor which wraps the policy and assigns it to the option.
+			options.RetryPolicy = 
+				() => 
+					(attempt, ex) => {
+						System.Diagnostics.Debug.WriteLine(
+														"Attempt = {0}. Exception = {1}",
+														attempt,
+														ex);
+
+						return exponentatial(attempt, ex);
+					};
+					
+		}
+
+		// -------------------------------------------------------------------------------------------------------------
 	}
 
 
