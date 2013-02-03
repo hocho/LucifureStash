@@ -123,11 +123,12 @@ type StashClient<'a when 'a : equality> private
         |   _       ->  (new StreamReader(response.GetResponseStream())).ReadToEnd()
 
     // actual request to table service
-    let makeRequest (request : HttpWebRequest) content = 
+    let makeRequest (buildRequest : unit -> HttpWebRequest) content = 
         
-        let shouldRetry = retryPolicy.Invoke()   
+        let rec makeRequest' attempt shouldRetry =         
 
-        let rec makeRequest' request content attempt =         
+            let request = buildRequest()
+            
             try
                 let response, result = RestRequestBuilder.GetResponse request
 
@@ -138,22 +139,28 @@ type StashClient<'a when 'a : equality> private
             with 
                 |   :? WebException as ex  ->   
 
-                    match Retryable.canRetry shouldRetry attempt ex with
-                    |   true    ->  makeRequest' request content (attempt + 1)
-                    |   false   ->  sendFeedback (StashRequestResponse
-                                                                (request
-                                                                , content
-                                                                , ex.Response :?> HttpWebResponse
-                                                                , getResponseStream ex.Response
-                                                                , ex))
+                    let shouldRetry' =  match shouldRetry with
+                                        |   Some x  -> x
+                                        |   _       -> retryPolicy.Invoke() 
+
+                    match Retryable.canRetry shouldRetry' attempt ex with
+                    |   true    ->  makeRequest' (attempt + 1) (Some shouldRetry')
+                    |   false   ->  if isSendFeedback then    
+                                        sendFeedback (StashRequestResponse
+                                                                    (request
+                                                                    , content
+                                                                    , ex.Response :?> HttpWebResponse
+                                                                    , getResponseStream ex.Response
+                                                                    , ex))
                                     reraise()
 
                 |   _ as ex                 ->  
                     
-                    sendFeedback (StashRequestResponse(request, content, null, "", ex))
+                    if isSendFeedback then
+                        sendFeedback (StashRequestResponse(request, content, null, "", ex))
                     reraise()                  
 
-        makeRequest' request content 1
+        makeRequest' 0 None
     
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -163,7 +170,7 @@ type StashClient<'a when 'a : equality> private
 
         let rec tableList' (cont : string) = 
             seq {
-                let request = context.CreateRequest 
+                let request() = context.CreateRequest 
                                                 (command + 
                                                     (if cont.Is 
                                                         then (if command.Contains "?" 
@@ -196,7 +203,7 @@ type StashClient<'a when 'a : equality> private
 
         let content =   XmlRequestBuilder.buildCreateTable entitySetName
         
-        let request = context.CreateRequest 
+        let request() = context.CreateRequest 
                                         "Tables"
                                         CommandType.Insert
                                         content
@@ -207,7 +214,7 @@ type StashClient<'a when 'a : equality> private
 
     let tableRequest entitySetName commandType =
 
-        let request = context.CreateRequest 
+        let request() = context.CreateRequest 
                                         (sprintf 
                                             "Tables('%s')" 
                                             entitySetName)
@@ -260,7 +267,7 @@ type StashClient<'a when 'a : equality> private
 
         let _, content = typeReflector.ContentBuild supportLargeObjectsInPool instance
         
-        let request = context.CreateRequest 
+        let request() = context.CreateRequest 
                                         (getEntitySetName instance)
                                         CommandType.Insert
                                         content
@@ -307,7 +314,7 @@ type StashClient<'a when 'a : equality> private
 
         let etag, content = typeReflector.ContentBuild supportLargeObjectsInPool instance
         
-        let request = context.CreateRequest 
+        let request() = context.CreateRequest 
                                         (makeIdCmdFromInstance instance)
                                         commandType
                                         content
@@ -338,7 +345,7 @@ type StashClient<'a when 'a : equality> private
          
         let etag = transformETag etag eTagMatch
 
-        let request = context.CreateRequest 
+        let request() = context.CreateRequest 
                                         (makeIdCmd (entitySetNameRaw()) partitionKey rowKey)
                                         CommandType.Delete 
                                         null
@@ -372,7 +379,7 @@ type StashClient<'a when 'a : equality> private
         (partitionKey                       :   string) 
         (rowKey                             :   string) =
          
-        let request = context.CreateRequest 
+        let request() = context.CreateRequest 
                                         (makeIdCmd (entitySetNameRaw()) partitionKey rowKey)
                                         CommandType.Get 
                                         null
@@ -420,7 +427,7 @@ type StashClient<'a when 'a : equality> private
 
                 |>  typeReflector.ContentBuildBatch supportLargeObjectsInPool batchId
         
-        let request = context.CreateRequest 
+        let request() = context.CreateRequest 
                                         "$batch"
                                         CommandType.Batch
                                         content
