@@ -968,13 +968,13 @@ type StashClient<'a when 'a : equality> private
 and StashContext<'a when 'a : equality> internal
         (client                             :   StashClient<'a>) = 
     
-    let items = new Dictionary<string, 'a * EntityState>()
+    let items = new DictionarySafe<string, 'a * EntityState>()
 
     let getId = client.GetEntityId
 
     let updateState item state = 
         
-        items.[getId item] <- (item, state)
+        items.Put (getId item) (item, state)
     
     let updateStateOnTransition item = 
 
@@ -982,9 +982,9 @@ and StashContext<'a when 'a : equality> internal
             (fun () ->         
                 let id = getId item
 
-                if snd items.[id] = EntityState.Deleted 
-                    then    items.Remove(id) |> ignore
-                    else    items.[id] <- (item, EntityState.Unchanged)
+                if snd (items.Get id) = EntityState.Deleted 
+                    then    items.Remove id
+                    else    items.Put id (item, EntityState.Unchanged)
             )
         
     let updateStateOnQuery (item : obj) = 
@@ -1004,9 +1004,9 @@ and StashContext<'a when 'a : equality> internal
     let getTrackedEntities 
             (state                          :   EntityState) =
 
-        (items 
-            |>  Seq.filter  (fun i -> state.HasFlag (i.Value |> snd))
-            |>  Seq.map     (fun i -> EntityDescriptor(fst i.Value, snd i.Value)))
+        (items.Values 
+            |>  Seq.filter  (fun value -> state.HasFlag (value |> snd))
+            |>  Seq.map     (fun value -> EntityDescriptor(fst value, snd value)))
             .ToList()
         // ToList because we want to take a snapshot in time
 
@@ -1099,9 +1099,9 @@ and StashContext<'a when 'a : equality> internal
     member this.Commit
             (commitStrategy                 :   CommitStrategy) =   
      
-        let list =  (items 
-                        |>  Seq.filter (fun i -> snd i.Value <> EntityState.Unchanged)    
-                        |> Seq.map (fun i -> EntityOp(enum (int (snd i.Value)), fst i.Value)))
+        let list =  (items.Values
+                        |>  Seq.filter (fun value -> snd value <> EntityState.Unchanged)    
+                        |> Seq.map (fun value -> EntityOp(enum (int (snd value)), fst value)))
                         .ToList() 
 
         client.Commit list commitStrategy updateStateOnTransition
