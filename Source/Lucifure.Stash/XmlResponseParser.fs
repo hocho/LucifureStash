@@ -127,9 +127,9 @@ module internal XmlResponseParser =
                                                             nameValues
                                                             (getProperties reader) 
                                                 yield! read (Seq.empty<NameValue>)  // start next set
-                        |   _               ->  ()
-               
-                    yield! read nameValues                     
+                        |   _               ->  yield! read nameValues
+                    else
+                        yield! read nameValues                     
                 }
 
         read (Seq.empty<NameValue>)
