@@ -168,7 +168,11 @@ type internal ExpressionParser<'a>
 
     and visitMemberAccess (exp: MemberExpression) = 
         
-        match exp.Expression.NodeType with
+        if exp.Expression <> null
+            then exp.Expression.NodeType
+            else exp.NodeType
+        |> 
+        function
         |   ExpressionType.Constant ->
 
                 let mbr = exp.Member
