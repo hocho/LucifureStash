@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EC385A5D-881C-4FB7-BE84-05DD76B6588B}"
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
@@ -19,16 +19,16 @@ Global
 		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs16
-		SccProjectUniqueName0 = Lucifure.Stash\\Lucifure.Stash.fsproj
-		SccProjectName0 = Lucifure.Stash
-		SccLocalPath0 = Lucifure.Stash
-		SccProjectUniqueName1 = Lucifure.Stash.Test\\Lucifure.Stash.Test.csproj
-		SccProjectName1 = Lucifure.Stash.Test
-		SccLocalPath1 = Lucifure.Stash.Test
-		SccProjectUniqueName2 = Lucifure.Stash.Tutorial\\Lucifure.Stash.Tutorial.csproj
-		SccProjectName2 = Lucifure.Stash.Tutorial
-		SccLocalPath2 = Lucifure.Stash.Tutorial
-		SccLocalPath3 = .
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Lucifure.Stash\\Lucifure.Stash.fsproj
+		SccProjectName1 = Lucifure.Stash
+		SccLocalPath1 = Lucifure.Stash
+		SccProjectUniqueName2 = Lucifure.Stash.Test\\Lucifure.Stash.Test.csproj
+		SccProjectName2 = Lucifure.Stash.Test
+		SccLocalPath2 = Lucifure.Stash.Test
+		SccProjectUniqueName3 = Lucifure.Stash.Tutorial\\Lucifure.Stash.Tutorial.csproj
+		SccProjectName3 = Lucifure.Stash.Tutorial
+		SccLocalPath3 = Lucifure.Stash.Tutorial
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Lucifure.Stash.vsmdi
