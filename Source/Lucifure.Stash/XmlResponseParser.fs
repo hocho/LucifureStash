@@ -59,8 +59,7 @@ module internal XmlResponseParser =
                             if not isNull then
                                 yield NameValue(
                                                 reader.LocalName, 
-                                                // ReadElementString skips past the end element
-                                                ObjectConverter.toObj edmType (reader.ReadElementString()))      
+                                                ObjectConverter.toObj edmType (reader.ReadString()))      
                                                                 
 
                             yield! readAllProperties()
