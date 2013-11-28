@@ -1,9 +1,14 @@
-﻿using System;
+﻿//If you have the Storage Client installed and want to use it, uncomment the following line
+//#define USE_STORAGE_CLIENT
+using System;
 using System.Configuration;
 using System.Diagnostics;
 
 using CodeSuperior.Lucifure;
+
+#if USE_STORAGE_CLIENT
 using Microsoft.WindowsAzure;
+#endif
 
 namespace Lucifure.Stash.Test 
 {
@@ -39,11 +44,13 @@ namespace Lucifure.Stash.Test
 			// *** Change type here switch between storage emulator and the cloud storage ***
 			ConfigType = ConfigurationType.StashEmulator;
 
+#if USE_STORAGE_CLIENT
 		    CloudStorageAccount.SetConfigurationSettingPublisher(
 		        (configName, configSetter) =>
 		                configSetter(
 		                    ConfigurationManager.AppSettings[configName]));
 
+#endif
 		}
 
 		public 
@@ -107,6 +114,7 @@ namespace Lucifure.Stash.Test
 											options);		
 					break;
 
+#if USE_STORAGE_CLIENT
 				case ConfigurationType.StorageAccountCloud:
 					
 					result = GetStasherUsingCloudStorageAccount<T>(
@@ -120,6 +128,7 @@ namespace Lucifure.Stash.Test
 													"DataConnectionStringEmulator",
 													options);
 					break;
+#endif
 			}
 
 			return result;
@@ -133,6 +142,7 @@ namespace Lucifure.Stash.Test
 			return GetClient<T>(GetDefaultOptions());
 		}
 
+#if USE_STORAGE_CLIENT
 		static
 		StashClient<T>
 		GetStasherUsingCloudStorageAccount<T>(
@@ -158,6 +168,33 @@ namespace Lucifure.Stash.Test
 									options);		
 		}
 
+		// -------------------------------------------------------------------------------------------------------------
+
+		public
+		static
+		CloudStorageAccount
+		GetCloudStorageAccount(
+			string								setting)
+		{
+		    return CloudStorageAccount.FromConfigurationSetting(setting);
+		}
+
+		public
+		static
+		CloudStorageAccount
+		GetCloudStorageAccount()
+		{
+		    return GetCloudStorageAccount("DataConnectionString");
+		}
+
+		public
+		static
+		CloudStorageAccount
+		GetCloudStorageAccountEmulator()
+		{
+		    return GetCloudStorageAccount("DataConnectionStringEmulator");
+		}
+#endif
 		// -------------------------------------------------------------------------------------------------------------
 
 			static
@@ -201,32 +238,6 @@ namespace Lucifure.Stash.Test
 			}
 		}
 
-		// -------------------------------------------------------------------------------------------------------------
-
-		public
-		static
-		CloudStorageAccount
-		GetCloudStorageAccount(
-			string								setting)
-		{
-		    return CloudStorageAccount.FromConfigurationSetting(setting);
-		}
-
-		public
-		static
-		CloudStorageAccount
-		GetCloudStorageAccount()
-		{
-		    return GetCloudStorageAccount("DataConnectionString");
-		}
-
-		public
-		static
-		CloudStorageAccount
-		GetCloudStorageAccountEmulator()
-		{
-		    return GetCloudStorageAccount("DataConnectionStringEmulator");
-		}
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------

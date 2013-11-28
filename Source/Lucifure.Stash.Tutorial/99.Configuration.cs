@@ -1,5 +1,5 @@
-﻿//If you do not have the Storage Client installed, comment the following line to remove the dependency.
-#define USE_STORAGE_CLIENT
+﻿//If you have the Storage Client installed and want to use it, uncomment the following line
+//#define USE_STORAGE_CLIENT
 using System;
 using System.Linq;
 using System.Configuration;
