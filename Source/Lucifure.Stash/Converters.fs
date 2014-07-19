@@ -64,7 +64,7 @@ module internal Converters =
     
     let converterInt64 = 
         new Converter<Int64>
-                        ("Int62"
+                        ("Int64"
                         ,(fun (s : string) -> upcast Int64.Parse s)
                         ,(fun (o : obj) -> o.ToString()))
 
