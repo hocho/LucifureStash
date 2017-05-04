@@ -2,11 +2,11 @@
 
 **In addition to supporting most of the features in the existing Azure Storage Client, Lucifure Stash Version 1.3.0,  a .NET client library written in F#, adds the following capabilities in an elegant and intuitive manner. Also available on NuGet.**
 
-- Stash strings and byte arrays larger than 64K.
-- Stash arrays and lists – one collection element per table property.
-- Dynamic stashing via a dictionary, so you do not have to map every table property to a class member.
- - Makes it trivial to read an existing tables of unknown schema.
- - Makes merging simple and efficient.   
+* Stash strings and byte arrays larger than 64K.
+* Stash arrays and lists – one collection element per table property.
+* Dynamic stashing via a dictionary, so you do not have to map every table property to a class member.
+ * Makes it trivial to read an existing tables of unknown schema.
+ * Makes merging simple and efficient.   
 - Morph any data type to a native azure table supported type.
 - Built in morphing for all enumerations.
 - Intrinsic morphing for byte, sbyte, char, int16, uint16, uint32 and uint64.
