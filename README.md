@@ -27,3 +27,4 @@
   * Hooks to peek into the http request and response. Great for development time debugging purposes.  Great from runtime logging. 
   * Enhanced error reporting quickly points to type definition errors upfront, before calling table storage.
  
+Available on nuget https://www.nuget.org/packages/LucifureStash
